@@ -24,7 +24,6 @@ pipeline {
                     sh 'echo Testing is done'
                 }
             }
-
         stage ('Deployment Stage') {
             steps {
                   sh 'echo Deployement is done'
