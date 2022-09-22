@@ -2,7 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage ('Compile Stage') {
+        stage ('Listrepo') {
+
+            steps {
+              
+                    sh 'ls'
+                }
+            }
+               stage ('Compile Stage') {
 
             steps {
               
