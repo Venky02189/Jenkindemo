@@ -1,9 +1,32 @@
-public class SumOfNumbers1
-{
-public static void main(String args[])
-{
-int n1 = 225, n2 = 115, sum;
-sum = n1 + n2;
-System.out.println("The sum of numbers is: "+sum);
-}
+pipeline {
+    agent any
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "M3"                                 //M3 is local directory
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                // Get some code from a GitHub repository
+                git 'https://github.com/jglick/simple-maven-project-with-tests.git'   //clone
+
+                // Run Maven on a Unix agent.
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"                 //package creation
+
+                // To run Maven on a Windows agent, use
+                // bat "mvn -Dmaven.test.failure.ignore=true clean package"    //bash
+            }
+
+            post {
+                // If Maven was able to run the tests, even if some of the test
+                // failed, record the test results and archive the jar file.
+                success {
+                    junit '**/target/surefire-reports/TEST-*.xml'                       //nexus
+                    archiveArtifacts 'target/*.jar'
+                }
+            }
+        }
+    }
 }
