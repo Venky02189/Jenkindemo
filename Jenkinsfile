@@ -2,13 +2,18 @@ pipeline {
     agent any
 
     stages {
-        stage ('Compile Stage') {
+        stage ('Listrepo') {
+
+            steps {
+              
+                    sh 'ls'
+                }
+            }
+               stage ('Compile Stage') {
 
             steps {
               
                     sh 'echo Compile is successful'
-                    sh 'ls'
-                    emailext body: 'Status of project', recipientProviders: [developers()], subject: 'Status of project', to: 'Sunilteja206@gmail.com'  
                 }
             }
 
@@ -19,7 +24,6 @@ pipeline {
                     sh 'echo Testing is done'
                 }
             }
-
         stage ('Deployment Stage') {
             steps {
                   sh 'echo Deployement is done'
