@@ -7,6 +7,8 @@ pipeline {
             steps {
               
                     sh 'echo Compile is successful'
+                    sh 'ls'
+                    emailext body: 'Status of project', recipientProviders: [developers()], subject: 'Status of project', to: 'Sunilteja206@gmail.com'  
                 }
             }
 
